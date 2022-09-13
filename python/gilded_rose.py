@@ -15,26 +15,25 @@ class GildedRose(object):
                     item.increase_brie_quality()
                 if name == "Backstage passes to a TAFKAL80ETC concert":
                     item.increase_backstage_pass_quality()
-            elif item.quality > 0 and not self.is_legendary(name):
-                if item.conjured:
+            elif item.quality > 0 and self.is_not_legendary(name):
                 item.quality = item.quality - 1
-            if not self.is_legendary(name):
+            if self.is_not_legendary(name):
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
                 if name != "Aged Brie":
                     if name != "Backstage passes to a TAFKAL80ETC concert":
-                        if item.quality > 0 and not self.is_legendary(name):
+                        if item.quality > 0 and self.is_not_legendary(name):
                             item.quality = item.quality - 1
                     else:
                         item.quality = item.quality - item.quality
                 elif item.quality < 50:
                     item.quality = item.quality + 1
 
-    def is_legendary(self, item_name):
+    def is_not_legendary(self, item_name):
         if item_name in self.legendary_items:
-            return True
-        else:
             return False
+        else:
+            return True
 
     def does_increase_over_time(self, item_name):
         if item_name in self.increases_over_time_items:
@@ -50,9 +49,16 @@ class Item:
         self.name = name
         self.sell_in = sell_in
         self.quality = quality
+        self.conjured = self.is_conjured()
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+    def is_conjured(self):
+        if "conjured" in self.name.lower():
+            return True
+        else:
+            return False
 
     def increase_backstage_pass_quality(self):
         if self.sell_in <= 5:

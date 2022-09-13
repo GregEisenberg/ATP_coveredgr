@@ -41,6 +41,14 @@ class GildedRoseTest(unittest.TestCase):
 
         self.assertEqual(7, items[0].sell_in)
 
+    def test_quality_decreases_conjured_item(self):
+        items = [Item("conjured item", 8, 10)]
+        sut = GildedRose(items)
+
+        sut.update_quality()
+
+        self.assertEqual(8, items[0].quality)
+
     def test_sell_in_decreases_brie(self):
         items = [Item("Aged Brie", 8, 10)]
         sut = GildedRose(items)
