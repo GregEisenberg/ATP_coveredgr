@@ -98,6 +98,22 @@ class GildedRoseTest(unittest.TestCase):
 
         self.assertEqual(8, items[0].quality)
 
+    def test_conjured_item_quality_decreases_before_sell_by(self):
+        items = [Item("Conjured item", 5, 10)]
+        sut = GildedRose(items)
+
+        sut.update_quality()
+
+        self.assertEqual(8, items[0].quality)
+
+    def test_conjured_item_quality_decreases_twice_as_fast_after_sell_by(self):
+        items = [Item("Conjured item", 0, 10)]
+        sut = GildedRose(items)
+
+        sut.update_quality()
+
+        self.assertEqual(6, items[0].quality)
+
     def test_generic_item_quality_does_not_go_negative(self):
         items = [Item("generic item", 0, 0)]
         sut = GildedRose(items)
