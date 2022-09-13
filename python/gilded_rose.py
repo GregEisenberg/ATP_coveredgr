@@ -16,6 +16,7 @@ class GildedRose(object):
                 if name == "Backstage passes to a TAFKAL80ETC concert":
                     item.increase_backstage_pass_quality()
             elif item.quality > 0 and not self.is_legendary(name):
+                if item.conjured:
                 item.quality = item.quality - 1
             if not self.is_legendary(name):
                 item.sell_in = item.sell_in - 1
