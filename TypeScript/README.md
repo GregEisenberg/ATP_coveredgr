@@ -22,25 +22,35 @@ General item requirements:
 * quality >= 0
 
 Normal items
+* name is anything else
 * quality caps out at 50
 * normal degrading rules
   * sell-by date:
     * before sell-by date: quality degrades by 1 each day
     * after sell-by date: quality degrades by 2 each day
 
+Conjured items
+* name starts with 'Conjured'
+* quality caps out at 50
+* degrading rules
+  * sell-by date:
+    * before sell-by date: quality degrades by 2 each day
+    * after sell-by date: quality degrades by 4 each day
+
 Quality increasing items
 * quality caps out at 50
 * backstage passes
+  * name starts with "Backstage passes"
   * Days left:
     * 10-: Quality increases by 2
     * 5-: quality increases by 3
   * Quality drops to 0 after the concert (concert date == sell-by date)
 * fine cheeses
-  * ex: aged brie
+  * name is one of ['Aged Brie']
   * quality increases by 1 each day
 
 Legendary items
-* ex: "Sulfuras"
+* name is one of ['Sulfuras, Hand of Ragnaros']
 * quality is static
   * don't degrade in quality
   * no quality cap
