@@ -10,16 +10,13 @@ class GildedRose(object):
     def update_quality(self):
         for item in self.items:
             name = item.name
-            if not self.does_increase_over_time(name):
-                if item.quality > 0 and not self.is_legendary(name):
-                    item.quality = item.quality - 1
-            elif item.quality < 50:
-                item.quality = item.quality + 1
+            if self.does_increase_over_time(name) and item.quality <= 50:
+                if name == "Aged Brie":
+                    item.increase_brie_quality()
                 if name == "Backstage passes to a TAFKAL80ETC concert":
-                    if item.sell_in < 11 and item.quality < 50:
-                        item.quality = item.quality + 1
-                    if item.sell_in < 6 and item.quality < 50:
-                            item.quality = item.quality + 1
+                    item.increase_backstage_pass_quality()
+            elif item.quality > 0 and not self.is_legendary(name):
+                item.quality = item.quality - 1
             if not self.is_legendary(name):
                 item.sell_in = item.sell_in - 1
             if item.sell_in < 0:
@@ -45,6 +42,8 @@ class GildedRose(object):
             return False
 
 
+
+
 class Item:
     def __init__(self, name, sell_in, quality):
         self.name = name
@@ -53,3 +52,18 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+    def increase_backstage_pass_quality(self):
+        if self.sell_in <= 5:
+            self.quality += 3
+        elif self.sell_in <= 10:
+            self.quality += 2
+        else:
+            self.quality += 1
+        if self.quality > 50:
+            self.quality = 50
+
+    def increase_brie_quality(self):
+        self.quality += 1
+        if self.quality > 50:
+            self.quality = 50
